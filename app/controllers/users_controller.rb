@@ -5,8 +5,6 @@ class UsersController < ApplicationController
   end
 
   def show
-
-    #   Parameters: {"path_username"=>"austin"}
     @the_user = User.where({ :username => params.fetch("path_username") }).first
 
     if @the_user == nil
