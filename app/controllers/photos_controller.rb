@@ -4,9 +4,17 @@ class PhotosController < ApplicationController
     render({ :template => "photos_templates/index" })
   end
 
-def create
-  
-end
+  def create
+    p = Photo.new
+    p.image = params.fetch("input_image")
+    p.caption = params.fetch("input_caption")
+    p.owner_id = params.fetch("input_owner_id")
+    p.save
+
+    @the_photo = Photo.where({ :image => params.fetch("input_image") }).first
+
+    redirect_to "/photos/#{@the_photo.id}"
+  end
 
   def show
     @the_photo = Photo.where({ :id => params.fetch("path_id") }).first
@@ -16,6 +24,17 @@ end
     else
       render({ :template => "photos_templates/show" })
     end
+  end
+
+  def update
+    f = Photo.where({ :id => params.fetch("path_id") }).first
+    f.image = params.fetch("input_image")
+    f.caption = params.fetch("input_caption")
+    f.save
+
+    @the_photo = Photo.where({ :id => params.fetch("path_id") }).first
+
+    redirect_to "/photos/#{@the_photo.id}"
   end
 
   def delete

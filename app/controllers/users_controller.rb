@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     u.save
 
     @the_user = User.where({ :username => params.fetch("input_username") }).first
-    
+
     redirect_to "/users/#{@the_user.username}"
   end
 
@@ -22,5 +22,15 @@ class UsersController < ApplicationController
     else
       render({ :template => "user_templates/show" })
     end
+  end
+
+  def update
+    y = User.where({ :username => params.fetch("path_username") }).first
+    y.username = params.fetch("input_username")
+    y.save
+
+    @the_user = User.where({ :username => params.fetch("input_username") }).first
+
+    redirect_to "/users/#{@the_user.username}"
   end
 end
