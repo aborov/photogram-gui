@@ -4,6 +4,13 @@ class UsersController < ApplicationController
     render({ :template => "user_templates/index" })
   end
 
+def create
+u = User.new
+u.username = params.fetch("input_username")
+u.save
+ render({ :template => "user_templates/show" })
+end
+
   def show
     @the_user = User.where({ :username => params.fetch("path_username") }).first
 
