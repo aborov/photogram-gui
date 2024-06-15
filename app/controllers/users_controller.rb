@@ -8,14 +8,17 @@ class UsersController < ApplicationController
     u = User.new
     u.username = params.fetch("input_username")
     u.save
-    redirect_to "/users"
+
+    @the_user = User.where({ :username => params.fetch("input_username") }).first
+    
+    redirect_to "/users/#{@the_user.username}"
   end
 
   def show
     @the_user = User.where({ :username => params.fetch("path_username") }).first
 
     if @the_user == nil
-      redirect to("/users")
+      redirect_to "/users"
     else
       render({ :template => "user_templates/show" })
     end
